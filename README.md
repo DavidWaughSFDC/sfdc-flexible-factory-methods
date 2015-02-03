@@ -53,9 +53,9 @@ Example: if your instance's Opportunity object has important (and possibly requi
 
 Another need for flexibility is around required or 'recommended' fields that need to be populated within the factory to produce a useful record.   Additionally, these critical fields may have assignments based on sObject variants like record type or use cases dictated by business logic.  
 
-The goal of this template is to bake as much of this dependency management and variant-routing logic into the factory method class as possible, such that the resulting class and its associated unit tests describe the use cases of the sObject within the instance quite broadly.  Due to the purposeful simplicity of the template (which may result in some code repetition as a result), an intermediate developer should be able to read the factory method class and it's tests to gain an immediate understanding of the workings of the instance, as well modify and extend the implementation. 
+The goal of this template is to bake as much of this dependency management and variant-routing logic into the factory method class as possible, such that the resulting class and its associated unit tests describe the cire use cases of the sObject within the instance quite broadly.  Due to the purposeful simplicity of the template (which may result in some code repetition), an intermediate developer should be able to read the factory method class and it's tests to gain an immediate understanding of the workings of the instance, as well modify and extend the implementation. 
 
-As a result, readability and extendibility is important when using this template.  Be kind to those that will come after you!
+Readability and extendibility is important when using this template.  Be kind to those that will come after you!
 
 #Notes on Naming
 Namespaces:  the code in this repo uses the namespaceless convention of a 3 or 4 character prefix for a grouping of code, followed by an underscore.  Factory method classes are all named Fact_sObject where sObject is the name of the sObject.  Tests are all grouped within the same prefix, suffixed with Test (Fact_sObjectTest).  UTIL_ acts as a utility prefix namespace to contain reusable code that shouldn't be limited only to the Fact_ prefix namespace.
