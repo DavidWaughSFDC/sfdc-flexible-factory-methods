@@ -1,0 +1,8 @@
+#Ignore the files:
+FactoryMethods.sublime-settings
+FactoryMethods.sublime-workspace
+FactroyMethods.sublime-project
+ 
+#Also ignore all files under the cache folder:
+config/*
+src/objects/*
