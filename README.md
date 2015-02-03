@@ -16,7 +16,9 @@ To configure this codeset in a live Salesforce environment, simply spin up a new
 5. Opportunity Product (LineItem): add custom field: Training_Date__c (Date)
 
 #Validate After Deployment
-To test the new apex classes, first run all Fact_sObjectTest classes in a test runner to verify that they all pass.  The changes will be rolled back, preventing us from inspecting the result, so let's commit a factory-produced record to the database: open an Execute Anonymous window in the Dev Console and execute the following lines of code, then filter by debug statements and navigate to the provided opportunity id to the new factory-produced opportunity record
+To test the new apex classes, first run all Fact_sObjectTest classes in a test runner to verify that they all pass.  
+
+The changes will be rolled back, preventing us from inspecting the result, so let's commit a factory-produced record to the database: open an Execute Anonymous window in the Dev Console and execute the following lines of code, then filter by debug statements and navigate to the provided opportunity id to the new factory-produced opportunity record
 
 ```java
 Opportunity opp = Fact_Opportunity.insertOpportunity(Fact_Opportunity.ONE_TIME_RECORD_TYPE, false);
@@ -29,11 +31,13 @@ Fact_OpportunityLineItem.insertOpportunityLineItems(opp, skus, variants);
 System.debug(opp.ID);
 ```
 
-This opportunity factory method automatically populates:
+The Opportunity factory method automatically populates:
 + the opportunity based on the variants provided (Indirect + One-Time recordtype)
 + an associated end user account (customer) with related billing contact
 + channel partner account (customer's parent)
-+ two different lineitems generated based on provided skus and lineitem variants
+
+The OpportunityLineItem factory method automatically populates:
++ two different lineitems based on provided skus (Product) and lineitem variants
 + associated Products and PricebookEntries for above lineitems.  
  
 These were all generated dynamically under SeeAllData=false test conditions, using 4 lines of apex.
