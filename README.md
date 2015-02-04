@@ -24,7 +24,7 @@ The changes will be rolled back, preventing us from inspecting the result, so le
 
 ```java
 //two different variants for the first factory method call, one a Boolean representing some desired initial state 
-//it's up to you to extend these developer sandbox compatible factories to meet your org's sObject complexity level
+//it's up to you to extend these developer-sandbox-compatible factories to meet your org's sObject complexity level
 Opportunity opp = Fact_Opportunity.insertOpportunity(Fact_Opportunity.ONE_TIME_RECORD_TYPE, false);
 
 List<String> skus = new List<String> {Fact_Product.DEFAULT_SKU, Fact_Product.DEFAULT_TRAINING_SKU};
