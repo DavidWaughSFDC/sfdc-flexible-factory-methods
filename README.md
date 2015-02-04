@@ -23,11 +23,14 @@ To test the new apex classes, first run all Fact_sObjectTest classes in a test r
 The changes will be rolled back, preventing us from inspecting the result, so let's commit a factory-produced record to the database: open an Execute Anonymous window in the Dev Console and execute the following lines of code, then filter by debug statements and navigate to the provided opportunity id to the new factory-produced opportunity record
 
 ```java
+//two different variants for the first factory method call, one a Boolean representing some desired initial state 
+//it's up to you to extend these developer sandbox compatible factories to meet your org's sObject complexity level
 Opportunity opp = Fact_Opportunity.insertOpportunity(Fact_Opportunity.ONE_TIME_RECORD_TYPE, false);
 
 List<String> skus = new List<String> {Fact_Product.DEFAULT_SKU, Fact_Product.DEFAULT_TRAINING_SKU};
 List<String> variants = new List<String> {Fact_OpportunityLineItem.STANDARD_LINEITEM, Fact_OpportunityLineItem.TRAINING_LINEITEM};
 
+//Parameterize the generation of 2 distinctly decorated lineitems with parent opportunity (attachment is automatic), productcode, and the first of what could be several variants to switch internal factory logic on:
 Fact_OpportunityLineItem.insertOpportunityLineItems(opp, skus, variants);
 
 System.debug(opp.ID);
