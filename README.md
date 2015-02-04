@@ -1,7 +1,7 @@
 #Flexible-Factory-Methods
 A Salesforce flexible factory methods template for use with sObjects and a generic developer sandbox instance.  Several standard sObjects are included to demonstrate the template.  Implementing this template will require customizing the existing code to fit your org's configuration, and extending the template to apply to other sObjects as suits your needs.  
 
-Another good guide to SFDC Factory implementation, see https://github.com/mbotos/SmartFactory-for-Force.com)  This repo has more detail on how to assign data types, and was published by our good friends at Mavens.
+For another good guide to SFDC Factory implementation, see https://github.com/mbotos/SmartFactory-for-Force.com)  This repo has more detail on how to assign data types, and was published by our good friends at Mavens.
 
 #Demo Setup
 To configure this codeset in a live Salesforce environment, simply spin up a new SFDC developer's instance, add the below custom configuration settings, then deploy these classes using your favorite deployment method (e.g. an IDE like MavensMate + ST3 or copy/paste into Developer Console).
