@@ -23,7 +23,7 @@ To test the new apex classes, first run all Fact_sObjectTest classes in a test r
 The changes will be rolled back, preventing us from inspecting the result, so let's commit a factory-produced record to the database: open an Execute Anonymous window in the Dev Console and execute the following lines of code, then filter by debug statements and navigate to the provided opportunity id to the new factory-produced opportunity record
 
 ```java
-//generate a default opportunity using two different variants for the first factory method call, one a Boolean representing some desired initial state and the other a recordtype
+//generate a default Opportunity using two different variants for the first factory method call, one a Boolean representing some desired initial state and the other a recordtype
 //it's up to you to extend these developer-sandbox-compatible factories to meet your org's sObject complexity level
 Opportunity opp = Fact_Opportunity.insertOpportunity(Fact_Opportunity.ONE_TIME_RECORD_TYPE, false);
 
