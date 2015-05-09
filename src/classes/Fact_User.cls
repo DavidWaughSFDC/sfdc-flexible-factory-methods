@@ -10,24 +10,24 @@ global class Fact_User
     //below static fields needed to insert unique username/emails for all new users within context
 	private static String orgId = UserInfo.getOrganizationId();
 	private static String dateString = String.valueof(Datetime.now()).replace(' ','').replace(':','').replace('-','');
-	private static Integer userInsertCount = 0;
+	private static Integer userCreateCount = 0;
 	private static Integer randomInt = Integer.valueOf(Math.rint(math.random() * 1000000));
 
-	global static User insertUser()
+	global static User createUser()
 	{	
 		List<String> profileNames = new List<String> {DEFAULT_PROFILE};
 
-		return insertUsers(profileNames)[0];
+		return createUsers(profileNames)[0];
 	}
 
-	global static User insertUser(String profileName)
+	global static User createUser(String profileName)
 	{	
 		List<String> profileNames = new List<String> {profileName};
 
-		return insertUsers(profileNames)[0];
+		return createUsers(profileNames)[0];
 	}
 
-	global static List<User> insertUsers(List<String> profileNames)
+	global static List<User> createUsers(List<String> profileNames)
 	{
 		//lazy map of profiles in profileNames elements to static member profileNameToProfileMap
 		Set<String> unmappedProfileNames = new Set<String>();
@@ -54,32 +54,30 @@ global class Fact_User
 			}
 		}
 
-		List<User> usersToInsert = new List<User>();
+		List<User> usersToCreate = new List<User>();
 		for (String profileName : profileNames)
 		{
-			User userToInsert = new User();
+			User userToCreate = new User();
 
-			String uniqueEmail = orgId + dateString + randomInt + String.valueOf(userInsertCount) + '@test' + orgId + '.org';
+			String uniqueEmail = orgId + dateString + randomInt + String.valueOf(userCreateCount) + '@test' + orgId + '.org';
 
-			userToInsert.Username = uniqueEmail;
-			userToInsert.Email = uniqueEmail;
-			userToInsert.LastName = 'LastName' + String.valueOf(userInsertCount);
-			userToInsert.FirstName = 'FirstName' + String.valueOf(userInsertCount);
-			userToInsert.Alias = 'use' + String.valueOf(userInsertCount);
-			userToInsert.CommunityNickname ='use' + String.valueOf(userInsertCount);
-			userToInsert.ProfileId = profileNameToProfileMap.get(profileName).ID;
-			userToInsert.EmailEncodingKey='UTF-8';
-			userToInsert.LanguageLocaleKey='en_US';
-			userToInsert.LocaleSidKey='en_US';
-			userToInsert.TimeZoneSidKey='America/Los_Angeles';
-			userToInsert.Country = 'US';
+			userToCreate.Username = uniqueEmail;
+			userToCreate.Email = uniqueEmail;
+			userToCreate.LastName = 'LastName' + String.valueOf(userCreateCount);
+			userToCreate.FirstName = 'FirstName' + String.valueOf(userCreateCount);
+			userToCreate.Alias = 'use' + String.valueOf(userCreateCount);
+			userToCreate.CommunityNickname ='use' + String.valueOf(userCreateCount);
+			userToCreate.ProfileId = profileNameToProfileMap.get(profileName).ID;
+			userToCreate.EmailEncodingKey='UTF-8';
+			userToCreate.LanguageLocaleKey='en_US';
+			userToCreate.LocaleSidKey='en_US';
+			userToCreate.TimeZoneSidKey='America/Los_Angeles';
+			userToCreate.Country = 'US';
 
-			usersToInsert.add(userToInsert);
-			userInsertCount++;
+			usersToCreate.add(userToCreate);
+			userCreateCount++;
 		}
 
-		insert usersToInsert;
-
-		return usersToInsert;
+        return usersToCreate;
 	}
 }
