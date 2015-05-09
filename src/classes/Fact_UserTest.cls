@@ -3,11 +3,15 @@ private class Fact_UserTest
 {
 	/******** TEST METHODS REGION ********/
 
-	static testmethod void insertUser_succeeds()
+	static testmethod void runAsUser_succeeds()
 	{
 		try
 		{
-			User u = Fact_User.insertUser();
+			User u = Fact_User.createUser();
+            System.runAs(u)
+            {
+                //runAs block
+            }
 		}
 		catch (Exception e)
 		{
@@ -15,11 +19,15 @@ private class Fact_UserTest
 		}
 	}
 
-	static testmethod void insertUserParameterProfile_succeeds()
+	static testmethod void  runAsUserParameterProfile_succeeds()
 	{
 		try
 		{
-			User u = Fact_User.insertUser(Fact_User.DEFAULT_PROFILE);
+			User u = Fact_User.createUser(Fact_User.DEFAULT_PROFILE);
+            System.runAs(u)
+            {
+                //runAs block
+            }
 		}
 		catch (Exception e)
 		{
@@ -27,7 +35,7 @@ private class Fact_UserTest
 		}
 	}
 
-	static testmethod void insertUsers_succeeds_differentProfiles()
+	static testmethod void runAsUsers_succeeds_differentProfiles()
 	{
 		try
 		{	
@@ -35,7 +43,15 @@ private class Fact_UserTest
 			profileNames.add(Fact_User.DEFAULT_PROFILE);
 			profileNames.add(Fact_User.SYSTEM_ADMINISTRATOR);
 
-			List<User> users = Fact_User.insertUsers(profileNames);
+			List<User> users = Fact_User.createUsers(profileNames);
+            System.runAs(users[0])
+            {
+                //runAs block
+            }
+            System.runAs(users[1])
+            {
+                //runAs block
+            }
 		}
 		catch (Exception e)
 		{
@@ -43,7 +59,7 @@ private class Fact_UserTest
 		}
 	}
 
-	static testmethod void insertUsers_succeeds_with25Users()
+	static testmethod void createUsers_succeeds_with25Users()
 	{
 		try
 		{
@@ -53,7 +69,7 @@ private class Fact_UserTest
 				profileNames.add(Fact_User.DEFAULT_PROFILE);
 			}
 
-			List<User> users = Fact_User.insertUsers(profileNames);
+			List<User> users = Fact_User.createUsers(profileNames);
 		}
 		catch (Exception e)
 		{
@@ -61,12 +77,12 @@ private class Fact_UserTest
 		}
 	}
 
-	static testmethod void insertUser_fails()
+	static testmethod void createUser_fails()
 	{
 		try
 		{
 			//force failure with bad profile name
-			User u = Fact_User.insertUser('Invalid_Profile_Name');
+			User u = Fact_User.createUser('Invalid_Profile_Name');
 		}
 		catch (Exception e)
 		{
