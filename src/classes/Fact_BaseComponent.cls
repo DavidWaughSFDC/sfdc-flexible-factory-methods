@@ -12,7 +12,7 @@ public with sharing class Fact_BaseComponent
 	public Fact_BaseComponent(String objectName)
 	{
 		populateFieldNameToTypeMap(objectName);
-		recordTypesMap = UtilityMethods_Data.mapOfSObjectRecordTypes(objectName);
+		recordTypesMap = Util_DataMethods.mapOfSObjectRecordTypes(objectName);
 	}
 
 
