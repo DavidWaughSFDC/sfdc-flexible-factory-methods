@@ -1,4 +1,4 @@
-<a href="https://githubsfdeploy-sandbox.herokuapp.com/app/githubdeploy/DavidWaughSFDC/SFDC-Flexible-Factory-Methods">
+<a href="https://githubsfdeploy.herokuapp.com/?ownerDavidWaughSFDC&repo=SFDC-Flexible-Factory-Methods">
   <img alt="Deploy to Salesforce" src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
 </a>
 #Flexible-Factory-Methods
@@ -14,7 +14,7 @@ To configure this codeset in a live Salesforce environment, simply spin up a new
 2. Product:  add these three values to the Family picklist (Widget, Service, Training)
 3. Account: 
   1. add recordtypes with developernames Standard_Account, Channel_Partner
-  2. add custom fields: Region__c (String) and Billing_Contact__c (Contact lookup)
+  2. add custom fields: Region__c (Text) and Billing_Contact__c (Contact lookup)
 4. Opportunity: 
   1. add recordtypes (and associated sales processes) with developernames One_Time_Opportunity and Renewing_Opportunity
   2. add custom fields: Subscription_Start_Date__c (Date) and End_User_Account (Account lookup)
