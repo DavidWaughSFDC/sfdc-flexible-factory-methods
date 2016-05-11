@@ -1,4 +1,7 @@
-[Deploy to Salesforce Sandbox](https://githubsfdeploy-sandbox.herokuapp.com/app/githubdeploy/afawcett/apex-sobjectdataloader)
+<a href="https://githubsfdeploy.herokuapp.com">
+  <img alt="Deploy to Salesforce"
+       src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
+</a>
 
 #Flexible-Factory-Methods
 A Salesforce flexible factory methods template for use with sObjects and a generic developer sandbox instance.  Several standard sObjects are included to demonstrate the template.  Implementing this template will require customizing the existing code to fit your org's configuration, and extending the template to apply to other sObjects as suits your needs.  
