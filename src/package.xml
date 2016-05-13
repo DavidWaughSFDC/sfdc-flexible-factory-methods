@@ -5,52 +5,25 @@
         <name>ApexClass</name>
     </types>
     <types>
-        <members>*</members>
-        <name>ApexComponent</name>
+        <members>Opportunity.standard</members>
+        <name>BusinessProcess</name>
     </types>
     <types>
-        <members>*</members>
-        <name>ApexPage</name>
+        <members>Account.Billing_Contact__c</members>
+        <members>Account.Region__c</members>
+        <members>Opportunity.End_User_Account__c</members>
+        <members>Opportunity.Subscription_Start_Date__c</members>
+        <members>OpportunityLineItem.Training_Date__c</members>
+        <members>Product2.Family</members>
+        <name>CustomField</name>
     </types>
     <types>
-        <members>*</members>
-        <name>ApexTrigger</name>
+        <members>Account.Channel_Partner</members>
+        <members>Account.Standard_Account</members>
+        <members>Contact.Standard_Contact</members>
+        <members>Opportunity.One_Time_Opportunity</members>
+        <members>Opportunity.Renewing_Opportunity</members>
+        <name>RecordType</name>
     </types>
-    <types>
-        <members>*</members>
-        <name>CustomApplication</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>CustomLabels</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>CustomObject</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>CustomPageWebLink</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>CustomTab</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>HomePageComponent</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>HomePageLayout</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>Layout</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>StaticResource</name>
-    </types>
-    <version>33.0</version>
+    <version>31.0</version>
 </Package>
