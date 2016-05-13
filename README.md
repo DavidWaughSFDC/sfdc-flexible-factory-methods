@@ -7,17 +7,18 @@ A Salesforce flexible factory methods template for use with sObjects and a gener
 For another good guide to SFDC Factory Implementation, see https://github.com/mbotos/SmartFactory-for-Force.com)  This repo has more detail on how to assign data types, and was published by our good friends at Mavens.
 
 #Demo Setup
-To configure this codeset in a live Salesforce environment, simply spin up a new SFDC developer's instance, add the below custom configuration settings, then deploy these classes using your favorite deployment method (e.g. an IDE like MavensMate + ST3 or copy/paste into Developer Console).
+To configure this codeset (and associated custom fields) in a live Salesforce environment, simply spin up a new SFDC developer's instance and click the 'Deploy to Salesforce' button at the top of this document.
 
-#Developer Sandbox Config Settings for Demo
+#New Custom Fields Added to Standard Objects
 1. Contact:  add recordtype with developername Standard_Contact
 2. Product:  add these three values to the Family picklist (Widget, Service, Training)
 3. Account: 
   1. add recordtypes with developernames Standard_Account, Channel_Partner
   2. add custom fields: Region__c (Text) and Billing_Contact__c (Contact lookup)
 4. Opportunity: 
-  1. add recordtypes (and associated sales processes) with developernames One_Time_Opportunity and Renewing_Opportunity
-  2. add custom fields: Subscription_Start_Date__c (Date) and End_User_Account (Account lookup)
+  1. add new Sales Process named 'default'
+  2. add recordtypes (and associated sales processes) with developernames One_Time_Opportunity and Renewing_Opportunity
+  3. add custom fields: Subscription_Start_Date__c (Date) and End_User_Account (Account lookup)
 5. Opportunity Product (LineItem): add custom field: Training_Date__c (Date)
 
 #Validate After Deployment
