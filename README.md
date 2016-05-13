@@ -1,7 +1,7 @@
 <a href="https://githubsfdeploy.herokuapp.com/?owner=DavidWaughSFDC&repo=SFDC-Flexible-Factory-Methods">
   <img alt="Deploy to Salesforce" src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
 </a>
-#Flexible-Factory-Methods
+#flexible-factory-methods
 A Salesforce flexible factory methods template for use with sObjects and a generic developer sandbox instance.  Several standard sObjects are included to demonstrate the template.  Implementing this template will require customizing the existing code to fit your org's configuration, and extending the template to apply to other sObjects as suits your needs.  
 
 For another good guide to SFDC Factory Implementation, see https://github.com/mbotos/SmartFactory-for-Force.com)  This repo has more detail on how to assign data types, and was published by our good friends at Mavens.
