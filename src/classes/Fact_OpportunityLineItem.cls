@@ -134,13 +134,11 @@ global class Fact_OpportunityLineItem
         for (Product2 prod : distinctProducts) 
         {
             productIdsFromFactory.add(prod.ID);
-            pricebook2IdsFromOpp.add(opp.Pricebook2Id);
-
             product2IdToSkuMap.put(prod.ID, prod.ProductCode);
         }
 
         //generate PricebookEntries from factory for assignment to OLI lookup
-        List<PricebookEntry> distinctPbes = Fact_PricebookEntry.insertPricebookEntries(productIdsFromFactory, pricebook2IdsFromOpp);
+        List<PricebookEntry> distinctPbes = Fact_PricebookEntry.insertPricebookEntries(productIdsFromFactory, opp.Pricebook2Id);
         
         //pbe-insert-result guard condition
         if (distinctPbes == null || distinctPbes.size() == 0 || distinctPbes.size() != distinctSkuList.size())

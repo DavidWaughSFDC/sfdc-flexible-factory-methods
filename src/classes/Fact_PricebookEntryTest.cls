@@ -13,10 +13,9 @@ private class Fact_PricebookEntryTest
 
         	//construct Opp (with ID) from Factory and get auto-assigned PricebookId from Account
         	Opportunity opp = Fact_Opportunity.insertDirectOpportunity();
-        	ID pricebook2Id = opp.Pricebook2Id;
 
 			Test.startTest();
-			PricebookEntry pbe = Fact_PricebookEntry.insertPricebookEntry(productId, pricebook2Id);
+			PricebookEntry pbe = Fact_PricebookEntry.insertPricebookEntry(productId, opp.Pricebook2Id);
 			Test.stopTest();
 		}
 		catch (Exception e)
@@ -38,12 +37,9 @@ private class Fact_PricebookEntryTest
         	//use the same default-opp-account's pricebook for both products for multi-insert test
         	List<Id> pricebook2Ids = new List<Id>();
         	Opportunity opp = Fact_Opportunity.insertDirectOpportunity();
-        	pricebook2Ids.add(opp.Pricebook2Id);
-        	pricebook2Ids.add(opp.Pricebook2Id);
-
 
 			Test.startTest();
-			List<PricebookEntry> pbes = Fact_PricebookEntry.insertPricebookEntries(prodIds, pricebook2Ids);
+			List<PricebookEntry> pbes = Fact_PricebookEntry.insertPricebookEntries(prodIds, opp.Pricebook2Id);
 			Test.stopTest();
 		}
 		catch (Exception e)

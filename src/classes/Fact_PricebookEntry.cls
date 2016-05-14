@@ -84,76 +84,98 @@ global class Fact_PricebookEntry
 		return pbe;
 	}
 
-	//Core 'insert' method
-    global static List<PricebookEntry> insertPricebookEntries(List<ID> productIds, List<ID> pricebook2Ids)
+    global static List<PricebookEntry> insertPricebookEntries(List<ID> productIds, ID paramPricebook2Id)
     {
         //guard conditions:
-        if (productIds == null || productIds.size() == 0
-        	|| pricebook2Ids == null || pricebook2Ids.size() == 0)
+        if (productIds == null || productIds.size() == 0 || paramPricebook2Id == null)
         {
-            throw new PricebookEntryFactoryException('Method cannot have null or empty list parameters');       
-        }
-        if (productIds.size() != pricebook2Ids.size())
-        {
-            throw new PricebookEntryFactoryException('Method requires parameter lists have equal size');       
+            throw new PricebookEntryFactoryException('Method cannot have null or empty parameters');       
         }
 
-        Integer recordCount = productIds.size();
-
-        //Factory records to generate and insert
-        List<PricebookEntry> standardPbes = new List<PricebookEntry>();
-        List<PricebookEntry> pbes = new List<PricebookEntry>();
+        List<PricebookEntry> allPbesForInsert = new List<PricebookEntry>();
+        List<PricebookEntry> paramPbes = new List<PricebookEntry>();
 
         ID standardPricebook2Id = Util_DataMethods.getStandardPricebookId();
 
-	    //for per-pbe lookups: Product2Id from parameter and Pricebook2Id from UltilityMethod_Data
-        for (Integer i = 0; i < recordCount; i++)
+        // query to determine if pbe is already added for either the standard or paramater pricebooks
+        // (necessary because of seeAllData = true in tests)
+        List<PricebookEntry> alreadyInsertedPbes = [SELECT Id,
+                                                        UnitPrice,
+                                                        Product2Id,
+                                                        UseStandardPrice,
+                                                        IsActive,
+                                                        Pricebook2Id
+                                                    FROM PricebookEntry 
+                                                    WHERE Product2Id IN :productIds
+                                                    AND (Pricebook2Id = :standardPricebook2Id
+                                                        OR Pricebook2Id = :paramPricebook2Id)];
+
+
+
+        Map<Id, PricebookEntry> alreadyInsertedProductIdsInParamPricebookToPbeMap = new Map<Id, PricebookEntry>();
+        Map<Id, PricebookEntry> alreadyInsertedProductIdsInStandardPricebookToPbeMap = new Map<Id, PricebookEntry>();
+
+        // parse above query result into 2 (named) data structures for use below
+        for (PricebookEntry alreadyInsertedPbe : alreadyInsertedPbes)
         {
-        	//note: each pricebookEntry tied to a Pricebook2Id needs a standard entry first, so this
-        	//loop adds the standard pbe and then the Pricebook2-specific entry
-        	//Only the non-standard pbe need be returned
+            if (alreadyInsertedPbe.Pricebook2Id == paramPricebook2Id)
+            {
+                alreadyInsertedProductIdsInParamPricebookToPbeMap.put(alreadyInsertedPbe.Product2Id, alreadyInsertedPbe);
+            }
 
-            //DEMO Note: this base-code relies exclusively on the StandardPricebook for simplicity's sake,
-            //the second, parameter-based pricebook entry is commented out on line 121, 125, 129, and 132. Restore 
-            //and remove shortcut return once you have the factory opportunities being correctly assigned pricebooks 
-
-        	PricebookEntry standardPbeToInsert = createPricebookEntry();
-            //PricebookEntry pbeToInsert = createPricebookEntry();
-
-            //Pricebook2Id assignments
-            factoryBase.assignLookupValue(standardPbeToInsert, 'Pricebook2Id', standardPricebook2Id);
-            //factoryBase.assignLookupValue(pbeToInsert, 'Pricebook2Id', pricebook2Ids[i]);
-
-            //Product2Id assignment
-            factoryBase.assignLookupValue(standardPbeToInsert, 'Product2Id', productIds[i]);
-            //factoryBase.assignLookupValue(pbeToInsert, 'Product2Id', productIds[i]);
-
-            pbes.add(standardPbeToInsert);
-            //pbes.add(pbeToInsert);
+            else if (alreadyInsertedPbe.Pricebook2Id == standardPricebook2Id)
+            {
+                alreadyInsertedProductIdsInStandardPricebookToPbeMap.put(alreadyInsertedPbe.Product2Id, alreadyInsertedPbe);
+            }
         }
 
-        insert pbes;  
-        //base-code shortcut return
-        return pbes;
-        //insert pbes;
+        // use 2 filled data structures to determine which products need
+        // standard- and param-pricebook entries
+        for (Id productId : productIds)
+        {
+            PricebookEntry pbeToInsert = createPricebookEntry();
 
-        //return only second, non-standard pbe for each insert above
-        List<PricebookEntry> nonStandardPbes = new List<PricebookEntry>();
-        for (Integer i = 1; i < pbes.size(); i = i + 2)
-       	{
-       		nonStandardPbes.add(pbes[i]);
-       	}
+            if (!alreadyInsertedProductIdsInParamPricebookToPbeMap.containsKey(productId))
+            {
+                if (!alreadyInsertedProductIdsInStandardPricebookToPbeMap.containsKey(productId))
+                {
+                    PricebookEntry standardPbeToInsert = createPricebookEntry();
 
-        return nonStandardPbes;
+                    factoryBase.assignLookupValue(standardPbeToInsert, 'Pricebook2Id', standardPricebook2Id);
+                    factoryBase.assignLookupValue(standardPbeToInsert, 'Product2Id', productId);
+                
+                    allPbesForInsert.add(standardPbeToInsert);
+
+                }
+
+
+                factoryBase.assignLookupValue(pbeToInsert, 'Pricebook2Id', paramPricebook2Id);
+                factoryBase.assignLookupValue(pbeToInsert, 'Product2Id', productId);
+
+                // below line commented out because basic use-case only needs standard pricebook
+                //allPbesForInsert.add(pbeToInsert);
+            }
+            else
+            {
+                pbeToInsert = alreadyInsertedProductIdsInParamPricebookToPbeMap.get(productId);
+            }
+
+            // below line commented out because basic use-case only needs standard pricebook
+            //paramPbes.add(pbeToInsert);
+        }
+
+        insert allPbesForInsert;
+        
+        // toggle below lines to enable non-standard pricebook (see comments throughout this class)
+        return allPbesForInsert;
+        //return paramPbes;
     }
 
     global static PricebookEntry insertPricebookEntry(ID productId, ID pricebook2Id)
-	{
-		List<ID> productIds = new List<ID>();
-		List<ID> pricebook2Ids = new List<ID>();
+    {
+        List<ID> productIds = new List<ID>();
         productIds.add(productId);
-        pricebook2Ids.add(pricebook2Id);
 
-        return insertPricebookEntries(productIds, pricebook2Ids)[0];
+        return insertPricebookEntries(productIds, pricebook2Id)[0];
     }
 }

@@ -114,22 +114,23 @@ global class Fact_Product
         }
 
         // query to determine if sku is already added 
-        List<Product2> alreadyInsertedProducts = [SELECT ProductCode
+        List<Product2> alreadyInsertedProductsList = [SELECT ProductCode
                                                     FROM Product2 WHERE Product2.ProductCode IN :skus];
+
+        // create map of existing skus to products
+        Map<String, Product2> alreadyInsertedSkuToProductMap = new Map<String, Product2>();
 
         Set<String> uninsertedSkuSet = new Set<String>(skus);
 
-        if (alreadyInsertedProducts.size() > 0)
+        if (alreadyInsertedProductsList.size() > 0)
         {
-            // reduce alreadyInsertedSkus list to set 
-            Set<String> alreadyInsertedSkusSet = new Set<String>();
-            for (Product2 alreadyInsertedProduct : alreadyInsertedProducts)
+            // convert alreadyInsertedProductsList to map
+            for (Product2 alreadyInsertedProduct : alreadyInsertedProductsList)
             {
-                alreadyInsertedSkusSet.add(alreadyInsertedProduct.ProductCode);
+                alreadyInsertedSkuToProductMap.put(alreadyInsertedProduct.ProductCode, alreadyInsertedProduct);
             }
 
-            List<String> alreadyInsertedSkusList = new List<String>(alreadyInsertedSkusSet);
-            uninsertedSkuSet.removeAll(alreadyInsertedSkusList);
+            uninsertedSkuSet.removeAll(alreadyInsertedSkuToProductMap.keySet());
         }
 
 
@@ -152,9 +153,9 @@ global class Fact_Product
 
         insert prods;
 
-        if (alreadyInsertedProducts.size() > 0)
+        if (alreadyInsertedSkuToProductMap.size() > 0)
         {
-            prods.addAll(alreadyInsertedProducts);
+            prods.addAll(alreadyInsertedSkuToProductMap.values());
         }
 
         return prods;
