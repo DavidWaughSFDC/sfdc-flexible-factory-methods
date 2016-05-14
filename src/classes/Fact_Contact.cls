@@ -105,7 +105,7 @@ global class Fact_Contact
 		List<Contact> cons = new List<Contact>();
 		for (Integer i = 0; i < count; i++)
 		{
-			cons.add(createContact(DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME + String.valueOf(i)));
+			cons.add(createContact(DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME));
 		}
 
 		insert cons;

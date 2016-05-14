@@ -260,7 +260,7 @@ global class Fact_Opportunity
 
         for (Integer i = 0; i < count; i++)
         {
-            names.add(DEFAULT_DIRECT_OPPORTUNITY_NAME + String.valueOf(i));
+            names.add(DEFAULT_DIRECT_OPPORTUNITY_NAME);
             recordTypeNames.add(ONE_TIME_RECORD_TYPE);
         }
 
@@ -278,7 +278,7 @@ global class Fact_Opportunity
 
         for (Integer i = 0; i < count; i++)
         {
-            names.add(DEFAULT_DIRECT_OPPORTUNITY_NAME + String.valueOf(i));
+            names.add(DEFAULT_DIRECT_OPPORTUNITY_NAME);
             recordTypeNames.add(ONE_TIME_RECORD_TYPE);
         }
 
