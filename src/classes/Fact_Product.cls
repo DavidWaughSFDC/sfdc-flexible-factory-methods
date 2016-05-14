@@ -113,6 +113,28 @@ global class Fact_Product
             throw new ProductFactoryException('Method cannot have null or empty list parameters');       
         }
 
+        // query to determine if sku is already added 
+        List<Product2> alreadyInsertedProducts = [SELECT ProductCode
+                                                    FROM Product2 WHERE Product2.ProductCode IN :skus];
+
+        Set<String> uninsertedSkuSet = new Set<String>(skus);
+
+        if (alreadyInsertedProducts.size() > 0)
+        {
+            // reduce alreadyInsertedSkus list to set 
+            Set<String> alreadyInsertedSkusSet = new Set<String>();
+            for (Product2 alreadyInsertedProduct : alreadyInsertedProducts)
+            {
+                alreadyInsertedSkusSet.add(alreadyInsertedProduct.ProductCode);
+            }
+
+            List<String> alreadyInsertedSkusList = new List<String>(alreadyInsertedSkusSet);
+            uninsertedSkuSet.removeAll(alreadyInsertedSkusList);
+        }
+
+
+        List<String> uninsertedSkuList = new List<String>(uninsertedSkuSet);
+
         Integer recordCount = skus.size();
 
         //Factory records to generate and insert
