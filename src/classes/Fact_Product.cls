@@ -152,6 +152,11 @@ global class Fact_Product
 
         insert prods;
 
+        if (alreadyInsertedProducts.size() > 0)
+        {
+            prods.addAll(alreadyInsertedProducts);
+        }
+
         return prods;
     }
 
