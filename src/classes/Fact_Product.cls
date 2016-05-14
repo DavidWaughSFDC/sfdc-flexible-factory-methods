@@ -135,7 +135,7 @@ global class Fact_Product
 
         List<String> uninsertedSkuList = new List<String>(uninsertedSkuSet);
 
-        Integer recordCount = skus.size();
+        Integer recordCount = uninsertedSkuList.size();
 
         //Factory records to generate and insert
         List<Product2> prods = new List<Product2>();
@@ -143,7 +143,7 @@ global class Fact_Product
         //per-record creation
         for (Integer i = 0; i < recordCount; i++)
         {
-            Product2 productToInsert = createProduct(skus[i]);
+            Product2 productToInsert = createProduct(uninsertedSkuList[i]);
 
             prods.add(productToInsert);
         }

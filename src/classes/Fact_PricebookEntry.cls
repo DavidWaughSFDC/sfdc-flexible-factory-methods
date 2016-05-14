@@ -113,7 +113,7 @@ global class Fact_PricebookEntry
         	//loop adds the standard pbe and then the Pricebook2-specific entry
         	//Only the non-standard pbe need be returned
 
-            //DEMO Note: because the demo relies exclusively on the StandardPricebook for simplicity's sake,
+            //DEMO Note: this base-code relies exclusively on the StandardPricebook for simplicity's sake,
             //the second, parameter-based pricebook entry is commented out on line 121, 125, 129, and 132. Restore 
             //and remove shortcut return once you have the factory opportunities being correctly assigned pricebooks 
 
@@ -133,7 +133,7 @@ global class Fact_PricebookEntry
         }
 
         insert pbes;  
-        //Demo shortcut return
+        //base-code shortcut return
         return pbes;
         //insert pbes;
 

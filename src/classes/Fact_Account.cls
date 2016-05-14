@@ -271,7 +271,7 @@ global class Fact_Account
         List<String> entityIdsAndIsDirect = new List<String>();
         for (Integer i = 0; i < count; i++)
         {
-            names.add(DEFAULT_DIRECT_NAME + String.valueOf(i));
+            names.add(DEFAULT_DIRECT_NAME);
             entityIdsAndIsDirect.add(DEFAULT_ENTITY_ID_AND_DIRECT);
         }
 
@@ -289,7 +289,7 @@ global class Fact_Account
 		List<Account> accs = new List<Account>();
 		for (Integer i = 0; i < entityIdAndIsDirectList.size(); i++)
 		{
-            names.add(DEFAULT_DIRECT_NAME + String.valueOf(i));
+            names.add(DEFAULT_DIRECT_NAME);
             entityIdsAndIsDirect.add(entityIdAndIsDirectList[i]);		
         }
 
@@ -303,7 +303,7 @@ global class Fact_Account
 
         for (Integer i = 0; i < count; i++)
         {
-            cpAccountsToInsert.add(createAccount(DEFAULT_CP_NAME + String.valueOf(i), DEFAULT_ENTITY_ID_AND_DIRECT, true));
+            cpAccountsToInsert.add(createAccount(DEFAULT_CP_NAME, DEFAULT_ENTITY_ID_AND_DIRECT, true));
         }
 
         insert cpAccountsToInsert;
