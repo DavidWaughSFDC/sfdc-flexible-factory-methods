@@ -7,7 +7,9 @@ A Salesforce flexible factory methods template for use with sObjects and a gener
 For another good guide to SFDC Factory Implementation, see https://github.com/mbotos/SmartFactory-for-Force.com)  This repo has more detail on how to assign data types, and was published by our good friends at Mavens.
 
 #Demo Setup
-To configure this codeset (and associated custom fields) in a live Salesforce environment, simply spin up a new SFDC developer's instance and click the 'Deploy to Salesforce' button at the top of this document.
+To configure this codeset (and associated custom fields) in a live Salesforce environment, simply spin up a new SFDC developer's instance ([Developer Instance Sign Up](https://developer.salesforce.com/signup "Salesforcee's Developer Instance Sign Up"))
+
+and click the 'Deploy to Salesforce' button at the top of this document.
 
 #New Custom Fields Added to Standard Objects
 1. Contact:  add recordtype with developername Standard_Contact
