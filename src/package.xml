@@ -18,6 +18,12 @@
         <name>CustomField</name>
     </types>
     <types>
+        <members>Account-Account Layout</members>
+        <members>Opportunity-Opportunity Layout</members>
+        <members>OpportunityLineItem-Opportunity Product Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
         <members>Account.Channel_Partner</members>
         <members>Account.Standard_Account</members>
         <members>Contact.Standard_Contact</members>
