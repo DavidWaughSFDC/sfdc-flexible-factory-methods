@@ -236,7 +236,8 @@ global class Fact_Account
 		List<String> names = new List<String>();
         List<String> entityIdsAndIsDirect = new List<String>();
         
-        names.add(DEFAULT_DIRECT_NAME);
+        Integer accountSuffix = Fact_BaseComponent.getExistingRecordCount('Account', DEFAULT_DIRECT_NAME) + 1;
+        names.add(DEFAULT_DIRECT_NAME + accountSuffix);
         entityIdsAndIsDirect.add(DEFAULT_ENTITY_ID_AND_DIRECT);
 
         return insertAccounts(names, entityIdsAndIsDirect)[0];
@@ -247,7 +248,9 @@ global class Fact_Account
         List<String> names = new List<String>();
         List<String> entityIdsAndIsDirect = new List<String>();
         
-        names.add(DEFAULT_INDIRECT_NAME);
+        Integer accountSuffix = Fact_BaseComponent.getExistingRecordCount('Account', DEFAULT_INDIRECT_NAME) + 1;
+        names.add(DEFAULT_DIRECT_NAME + accountSuffix);
+        
         entityIdsAndIsDirect.add(DEFAULT_ENTITY_ID_AND_INDIRECT);
 
         return insertAccounts(names, entityIdsAndIsDirect)[0];
@@ -257,8 +260,18 @@ global class Fact_Account
     {
         List<String> names = new List<String>();
         List<String> entityIdsAndIsDirect = new List<String>();
+		
+        Integer accountSuffix;
+        if (entityIdAndIsDirect.contains('_Direct'))
+        {
+        	accountSuffix = Fact_BaseComponent.getExistingRecordCount('Account', DEFAULT_DIRECT_NAME) + 1;
+        }
+        else
+        {
+        	accountSuffix = Fact_BaseComponent.getExistingRecordCount('Account', DEFAULT_INDIRECT_NAME) + 1;
+        }
         
-        names.add(name);
+        names.add(name + accountSuffix);
         entityIdsAndIsDirect.add(entityIdAndIsDirect);
 
         return insertAccounts(names, entityIdsAndIsDirect)[0];
@@ -269,9 +282,13 @@ global class Fact_Account
     {
         List<String> names = new List<String>();
         List<String> entityIdsAndIsDirect = new List<String>();
+        
+        Integer existingCount = Fact_BaseComponent.getExistingRecordCount('Account', DEFAULT_DIRECT_NAME);
+        
         for (Integer i = 0; i < count; i++)
         {
-            names.add(DEFAULT_DIRECT_NAME);
+            Integer accountSuffix = existingCount + i + 1;
+            names.add(DEFAULT_DIRECT_NAME + accountSuffix);
             entityIdsAndIsDirect.add(DEFAULT_ENTITY_ID_AND_DIRECT);
         }
 
@@ -285,11 +302,27 @@ global class Fact_Account
 
         List<String> names = new List<String>();
         List<String> entityIdsAndIsDirect = new List<String>();
-
+        
+        Integer existingCountDirect = Fact_BaseComponent.getExistingRecordCount('Account', DEFAULT_DIRECT_NAME);
+        Integer existingCountIndirect = Fact_BaseComponent.getExistingRecordCount('Account', DEFAULT_INDIRECT_NAME);
+        
 		List<Account> accs = new List<Account>();
 		for (Integer i = 0; i < entityIdAndIsDirectList.size(); i++)
 		{
-            names.add(DEFAULT_DIRECT_NAME);
+            if (entityIdAndIsDirectList[i].contains('_Direct'))
+            {
+                Integer accountSuffix = existingCountDirect + 1;
+                names.add(DEFAULT_DIRECT_NAME + accountSuffix);
+                
+                existingCountDirect++;
+            }
+            else
+            {
+                Integer accountSuffix = existingCountIndirect + 1;
+                names.add(DEFAULT_INDIRECT_NAME + accountSuffix);
+                
+                existingCountIndirect++;
+            }
             entityIdsAndIsDirect.add(entityIdAndIsDirectList[i]);		
         }
 
@@ -300,10 +333,12 @@ global class Fact_Account
     global static List<Account> insertChannelPartnerAccounts(Integer count)
     {
         List<Account> cpAccountsToInsert = new List<Account>();
+        Integer existingCount = Fact_BaseComponent.getExistingRecordCount('Account', DEFAULT_CP_NAME);
 
         for (Integer i = 0; i < count; i++)
         {
-            cpAccountsToInsert.add(createAccount(DEFAULT_CP_NAME, DEFAULT_ENTITY_ID_AND_DIRECT, true));
+            Integer accountSuffix = existingCount + i + 1;
+            cpAccountsToInsert.add(createAccount(DEFAULT_CP_NAME + accountSuffix , DEFAULT_ENTITY_ID_AND_DIRECT, true));
         }
 
         insert cpAccountsToInsert;

@@ -6,7 +6,7 @@ global class Fact_Contact
 	public static final String SOBJECT_NAME = 'Contact';
     public static final String DEFAULT_RECORD_TYPE_DEVELOPER_NAME = 'Standard_Contact';
 
-    public static final String DEFAULT_FIRST_NAME = 'Linus';  //random first name
+    public static final String DEFAULT_FIRST_NAME = 'A';  //random first name
     public static final String DEFAULT_LAST_NAME = 'FactoryContact';
 
     public static final String DEFAULT_VARIANT = 'STANDARD';
@@ -44,7 +44,8 @@ global class Fact_Contact
 
 	global static Contact createContact()
 	{
-		return createContact(DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME);
+        Integer contactSuffix = Fact_BaseComponent.getExistingRecordCountC('Contact', DEFAULT_LAST_NAME) + 1;
+		return createContact(DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME + contactSuffix);
 	}
 
 	global static Contact createContact(String firstName, String lastName)
@@ -91,7 +92,8 @@ global class Fact_Contact
     //single insert case
     global static Contact insertContact(String firstName, String lastName)
 	{
-		Contact contactToInsert = createContact(firstName, lastName);
+        Integer contactSuffix = Fact_BaseComponent.getExistingRecordCountC('Contact', lastName) + 1;
+		Contact contactToInsert = createContact(firstName, lastName + contactSuffix);
 
 		insert contactToInsert;
 
@@ -103,9 +105,12 @@ global class Fact_Contact
 	{
 		//Factory records to generate and insert
 		List<Contact> cons = new List<Contact>();
+        Integer existingCount = Fact_BaseComponent.getExistingRecordCountC('Contact', DEFAULT_LAST_NAME);
+        
 		for (Integer i = 0; i < count; i++)
 		{
-			cons.add(createContact(DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME));
+            Integer contactSuffix = existingCount + i + 1;
+			cons.add(createContact(DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME + contactSuffix));
 		}
 
 		insert cons;

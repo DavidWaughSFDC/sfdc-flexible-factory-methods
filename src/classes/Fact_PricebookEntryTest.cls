@@ -12,7 +12,7 @@ private class Fact_PricebookEntryTest
     	Product2 product2 = Fact_Product.insertProduct(Fact_Product.DEFAULT_SERVICE_SKU);
     	prodIds.add(product2.ID);
 
-    	//use the same default-opp-account's pricebook for both products for multi-insert test
+    	//use the same default-opp-account's pricebook for both products for test of multi-line insert
     	List<Id> pricebook2Ids = new List<Id>();
     	Opportunity opp = Fact_Opportunity.insertDirectOpportunity();
 

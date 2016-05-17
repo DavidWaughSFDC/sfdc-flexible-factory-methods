@@ -1,5 +1,5 @@
 public with sharing class Fact_BaseComponent 
-{
+{   
 	public class BaseFactoryException extends Exception { }
 
 	/******** MEMBERS REGION ********/
@@ -96,4 +96,38 @@ public with sharing class Fact_BaseComponent
 	{
 		obj.put(fieldName, lookupId);
 	}
+    
+    public static Integer getExistingRecordCount(String objectName, String defaultFactoryName)
+    {
+        Integer i = 0;
+        
+        if (!Test.isRunningTest())
+        {
+        	List<sObject> factorySObjectList = Database.query('SELECT ID FROM ' + objectName + ' WHERE Name like \'' + defaultFactoryName + '%\'');
+            
+            if (factorySObjectList != null)
+            {
+                i = factorySObjectList.size();
+            }
+        }
+        
+        return i;
+    }
+    
+    public static Integer getExistingRecordCountC(String objectName, String defaultFactoryName)
+    {
+        Integer i = 0;
+        
+        if (!Test.isRunningTest())
+        {
+        	List<sObject> factorySObjectList = Database.query('SELECT ID FROM ' + objectName + ' WHERE LastName like \'' + defaultFactoryName + '%\'');
+            
+            if (factorySObjectList != null)
+            {
+                i = factorySObjectList.size();
+            }
+        }
+        
+        return i;
+    }
 }
